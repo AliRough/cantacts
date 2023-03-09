@@ -46,6 +46,7 @@ export default function AddContact() {
                   name="photo"
                   id=""
                   placeholder="آدرس تصویر"
+                  accept="image/*"
                 />
                 <input
                   type="number"

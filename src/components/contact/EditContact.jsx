@@ -16,11 +16,12 @@ export default function EditContact() {
     loading,
     setLoading,
     createContact,
+    contacts,
+    setContacts,
     contact,
     setContact,
     onContactChange,
     groups,
-    setContacts,
     setFilteredContacts,
     forceRender,
     setForceRender,
@@ -45,19 +46,29 @@ export default function EditContact() {
     }
   }, []);
   const submitForm = async (e) => {
+    let allCantacts = [...contacts];
+
     try {
       e.preventDefault();
 
       setLoading(true);
-      let { data } = await updateContact(contact, contactId);
-      setLoading(false);
-      if (data) {
-        setForceRender(!forceRender)
+      let { data, status } = await updateContact(contact, contactId);
+
+      if (status === 200) {
+        setLoading(false);
+        const contactIndex = allCantacts.findIndex(
+          (c) => c.id === parseInt(contactId)
+        );
+        allCantacts[contactIndex] = data;
+        setContacts(allCantacts);
+        setFilteredContacts(allCantacts);
         navigate("/");
       }
-      console.log(data, contact, contactId);
     } catch (error) {
       console.log(error);
+      setContacts(allCantacts);
+      setFilteredContacts(allCantacts);
+      setLoading(false);
     }
   };
   return (

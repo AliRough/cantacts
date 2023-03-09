@@ -13,6 +13,7 @@ import {
   deleteContact,
 } from "./services/contactService";
 import Navbar from "./components/Navbar";
+import { useSearchParams } from "react-router-dom";
 
 export default function App() {
   let router = useRoutes(routes);
@@ -23,7 +24,7 @@ export default function App() {
   const [groups, setGroups] = useState([]);
   const [contact, setContact] = useState({});
   const [contactQuery, setContactQuery] = useState({ text: "" });
-
+  const [search, setSearch] = useSearchParams();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -172,6 +173,8 @@ export default function App() {
         contactSearch,
         forceRender,
         setForceRender,
+        search,
+        setSearch,
       }}
     >
       <div className="font-Vazirmatn overflow-hidden">
